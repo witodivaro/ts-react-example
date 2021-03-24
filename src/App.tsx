@@ -1,26 +1,39 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect } from "react";
+import "./App.scss";
+import TodoList from "./components/TodoList/TodoList.component";
+import { fetchTodos } from "./redux/todos/todos.actions";
+import { selectTodosNumber } from "./redux/todos/todos.selectors";
+import { decrement, increment } from "./redux/todos/todos.slice";
+import { useAppDispatch, useAppSelector } from "./redux/hooks";
 
-function App() {
+interface AppProps {
+  color?: string;
+}
+
+const App: React.FC<AppProps> = (): JSX.Element => {
+  const number = useAppSelector(selectTodosNumber);
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(fetchTodos());
+  }, [dispatch]);
+
+  const incrementHandler = (): void => {
+    dispatch(increment());
+  };
+
+  const decrementHandler = (): void => {
+    dispatch(decrement());
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="app">
+      <p>{number}</p>
+      <button onClick={incrementHandler}>Increment</button>
+      <button onClick={decrementHandler}>Decrement</button>
+      <TodoList />
     </div>
   );
-}
+};
 
 export default App;

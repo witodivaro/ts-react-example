@@ -1,0 +1,27 @@
+.todo-item {
+  margin-bottom: 5px;
+  padding: 10px;
+
+  border: 1px solid black;
+  border-radius: 5px;
+  transition: transform 0.3s ease;
+
+  &--complete {
+    .todo-item__title {
+      text-decoration: line-through;
+    }
+  }
+
+  &:hover {
+    transform: scale(1.02);
+    cursor: pointer;
+    user-select: none;
+  }
+
+  &__title {
+    margin: 0;
+    font-size: 20px;
+
+    text-align: center;
+  }
+}
